@@ -1,94 +1,150 @@
 package dom.jagadish.com;
 
 public class DateDifferenceProvider {
-	static final int JAN = 31;
-	static final int FEB = 28;
-	static final int MAR = 31;
-	static final int APR = 30;
-	static final int MAY = 31;
-	static final int JUN = 30;
-	static final int JUL = 31;
-	static final int AUG = 31;
-	static final int SEP = 30;
-	static final int OCT = 31;
-	static final int NOV = 30;
-	static final int DEC = 31;
+	static final int leapYear[] = { 0, 31, 29, 31, 30, 31, 30, 31, 31, 30, 31,
+		30, 31 };
+static final int nonLeapYear[] = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30,
+		31, 30, 31 };
 
-	int[] months = { JAN, FEB, MAR, APR, MAY, JUN, JUL, AUG, SEP, OCT, NOV, DEC };
+public int differeceCalculator(MyDate startDate, MyDate endDate) {
 
-	public int getDateDifference(MyDate startDate, MyDate endDate) {
-		if (sameDate(startDate, endDate) && sameMonth(startDate, endDate) && sameYear(startDate, endDate)) {
-			return 0;
-		} else if (sameMonth(startDate, endDate) && sameYear(startDate, endDate)) {
-			return endDate.getDd() - startDate.getDd();
-		} else if (sameYear(startDate, endDate)) {
-			return remainingDaysOfMonth(startDate) + daysInIntervingMonth(startDate, endDate) + endDate.getDd();
-		} else {
-			return remainingDaysOfMonth(startDate) + remainingDaysInYear(startDate) + leadingYear(endDate)
-					+ daysInInterveningYear(startDate, endDate);
+	if (sameDate(startDate, endDate) && sameMonth(startDate, endDate)&& sameYear(startDate, endDate)) {
+		return 0;
+	} else if (sameYear(startDate, endDate)
+			&& sameMonth(startDate, endDate)) {
+		return endDate.getDd() - startDate.getDd();
+	}
+
+	else if (sameYear(startDate, endDate) && !sameMonth(startDate, endDate)) {
+		return remainingDaysInMonth(startDate)
+				+ daysInIntervingMonth(startDate, endDate)
+				+ leadingMonth(endDate);
+	} else {
+		return remainingDaysInMonth(startDate)
+				+ intervingMonthFromStartDateToDecember(startDate)
+				+ leadingMonth(endDate)
+				+ intervingMonthFromJanuaryToEndMonth(endDate)
+				+ daysInInterveningYear(startDate, endDate);
+	}
+
+}
+
+private int intervingMonthFromJanuaryToEndMonth(MyDate endDate) {
+	int noOfDays = 0;
+	if (!leapYear(endDate.getYyyy())) {
+		for (int index = 1; index < endDate.getMm(); index++) {
+			noOfDays += nonLeapYear[index];
 		}
-
-	}
-
-	private boolean sameDate(MyDate startDate, MyDate endDate) {
-		return endDate.getDd() == startDate.getDd();
-	}
-
-	private boolean sameMonth(MyDate startDate, MyDate endDate) {
-		return endDate.getMm() == startDate.getMm();
-	}
-
-	private boolean sameYear(MyDate startDate, MyDate endDate) {
-		return endDate.getYyyy() == startDate.getYyyy();
-	}
-
-	private int remainingDaysOfMonth(MyDate date) {
-		return months[date.getMm() - 1] - date.getDd();
-	}
-
-	private int daysInIntervingMonth(MyDate startDate, MyDate endDate) {
-		int totalDays = 0;
-		for (int index = startDate.getMm() + 1; index < endDate.getMm(); index++) {
-			totalDays += months[index - 1];
+	} else {
+		for (int index = 1; index < endDate.getMm(); index++) {
+			noOfDays += leapYear[index];
 		}
-		return totalDays;
-
 	}
 
-	private int daysInInterveningYear(MyDate startDate, MyDate endDate) {
+	return noOfDays;
+}
 
-		int remainingdays = 0;
+private int intervingMonthFromStartDateToDecember(MyDate startDate) {
 
-		for (int year = startDate.getYyyy() + 1; year < endDate.getYyyy(); year++) {
-
-			remainingdays = remainingdays + 28;
-		}
-
-		return remainingdays;
-	}
-
-	private int remainingDaysInYear(MyDate startDate) {
-
-		int daysRemaining = 0;
-
+	int noOfDays = 0;
+	if (!leapYear(startDate.getYyyy())) {
 		for (int index = startDate.getMm() + 1; index <= 12; index++) {
-			daysRemaining = daysRemaining + months[index - 1];
+			noOfDays += nonLeapYear[index];
 		}
-
-		return daysRemaining;
+	} else if (leapYear(startDate.getYyyy())) {
+		for (int index = startDate.getMm() + 1; index <= 12; index++) {
+			noOfDays += leapYear[index];
+		}
 
 	}
 
-	private int leadingYear(MyDate endDate) {
+	return noOfDays;
+}
 
-		int daysRemaining = 0;
+private boolean leapYear(int year) {
 
-		for (int month = 1; month < endDate.getMm(); month++) {
-			daysRemaining = daysRemaining + months[month - 1];
+	return (((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
+
+}
+
+private int daysInInterveningYear(MyDate startDate, MyDate endDate) {
+	int noOfDays = 0;
+	for (int index = startDate.getYyyy() + 1; index < endDate.getYyyy(); index++) {
+		if (leapYear(index)) {
+			noOfDays += 366;
+		} else {
+			noOfDays += 365;
 		}
-
-		daysRemaining = daysRemaining + endDate.getDd();
-		return daysRemaining;
 	}
 
+	return noOfDays;
+	
+
+}
+
+private int leadingMonth(MyDate endDate) {
+	int noOfDays = 0;
+	noOfDays = endDate.getDd();
+
+	return noOfDays;
+}
+
+private int daysInIntervingMonth(MyDate startDate, MyDate endDate) {
+	
+	int noOfDays = 0;
+	if (!leapYear(endDate.getYyyy())) {
+		for (int index = startDate.getMm() + 1; index < endDate.getMm(); index++) {
+			noOfDays += nonLeapYear[index];
+		}
+
+	} else {
+		for (int index = startDate.getMm() + 1; index < endDate.getMm(); index++) {
+			noOfDays += leapYear[index];
+		}
+
+	}
+
+	return noOfDays;
+}
+
+private int remainingDaysInMonth(MyDate startDate) {
+	
+	int noOfDays = 0;
+	if (leapYear(startDate.getYyyy())) {
+		noOfDays = leapYear[startDate.getMm()] - startDate.getDd();
+
+	} else {
+		noOfDays = nonLeapYear[startDate.getMm()] - startDate.getDd();
+
+	}
+
+	return noOfDays;
+}
+
+private boolean sameYear(MyDate startDate, MyDate endDate) {
+	
+	if (startDate.getYyyy() == endDate.getYyyy()) {
+		return true;
+
+	}
+	return false;
+}
+
+private boolean sameMonth(MyDate startDate, MyDate endDate) {
+	
+	if (startDate.getMm() == endDate.getMm()) {
+		return true;
+
+	}
+	return false;
+
+}
+
+private boolean sameDate(MyDate startDate, MyDate endDate) {
+	if (startDate.getDd() == endDate.getDd()) {
+		return true;
+
+	}
+	return false;
+}
 }

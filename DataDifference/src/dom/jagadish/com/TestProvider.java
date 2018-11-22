@@ -2,43 +2,23 @@ package dom.jagadish.com;
 
 public class TestProvider {
 	
-	MyDate startDate;
-	MyDate endDate;
-	int actualDiffernce;
-	
-	public TestProvider(MyDate startDate, MyDate endDate, int actualDiffernce) {
+	private MyDate startDate;
+	private MyDate endDate;
+	 private int calculatedDifference;
+
+	public TestProvider(MyDate startDate, MyDate endDate, int calculatedDifference) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
-		this.actualDiffernce = actualDiffernce;
+		this.calculatedDifference = calculatedDifference;
 	}
-
 	public MyDate getStartDate() {
 		return startDate;
 	}
-
-	public void setStartDate(MyDate startDate) {
-		this.startDate = startDate;
-	}
-
 	public MyDate getEndDate() {
 		return endDate;
 	}
-
-	public void setEndDate(MyDate endDate) {
-		this.endDate = endDate;
+	public int getCalculatedDifference() {
+		return calculatedDifference;
 	}
-
-	public int getActualDiffernce() {
-		return actualDiffernce;
 	}
-
-	public void setActualDiffernce(int actualDiffernce) {
-		this.actualDiffernce = actualDiffernce;
-	}
-	
-	
-	
-	
-
-}

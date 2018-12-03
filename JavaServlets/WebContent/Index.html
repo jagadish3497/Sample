@@ -5,13 +5,38 @@
 <title>Form Validation</title>
 </head>
 <body>
+	<center>
+		<form action='InformationServ'>
+			<table align="center">
+				<tr>
+					<td>Username:</td>
+					<td><input type="text" size=25 name="uname"></td>
+				</tr>
+				<tr>
+					<td>Gender:</td>
+					<td><input type="radio" name="gender" value="male" checked>
+						Male <input type="radio" name="gender" value="female">
+						Female <input type="radio" name="gender" value="other">
+						Other</td>
+					<br>
+				</tr>
+				<tr>
+					<td>Select City:</td>
+					<td><select name="city">
+							<option value="select">Select</option>
+							<option value="bangalore">Bangalore</option>
+							<option value="chennai">Chennai</option>
+							<option value="hyderabad">Hyderabad</option>
+							<option value="andra">Andhra</option>
+					</select></td>
+					</br>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Submit"></td>
+				</tr>
 
-				<form action='HelloDemo'>
-				UserName: <input type='text' name='uname'><br>
-				<input type="radio" name="gender" value="male" checked> Male
-  				<input type="radio" name="gender" value="female"> Female
- 				 <input type="radio" name="gender" value="other"> Other  <br>
-				<input type='submit'>
-		
+				</form>
+			</table>
+	</center>
 </body>
 </html>

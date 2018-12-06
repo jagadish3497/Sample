@@ -1,0 +1,57 @@
+article {
+  color: black;
+  font-size: 14px;
+  padding: 1px 8px;
+  margin:50px;
+  background-color:#2ECC71 ;
+  float:right;
+  width:40%;
+}
+
+
+
+
+header {
+  text-align: top;
+  padding: 2px 16px;
+  color: #1C2833  ;
+  font-style:oblique;
+  float:middle;
+  margin:50px
+  
+}
+
+#ex {
+    
+    background: url(login.jpg);
+   background-repeat: no-repeat;
+   background-size: 100%;
+   
+}
+footer{
+	padding-bottom:182px;
+	
+}
+
+
+
+head {
+  color: black;
+  font-size: 14px;
+  padding: 2px 16px;
+  text-align:middle;
+  background-color: #2E86C1 ;
+  margin:50px;
+  float:middle;
+  width:40%;
+}
+form {
+	color: black;
+  font-size: 24px;
+  padding: 20px 50px;
+  text-align:middle;
+  background-color: #2E86C1 ;
+  margin:20px;
+  float:middle;
+  width:20%;
+}
